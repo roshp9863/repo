@@ -1,5 +1,7 @@
 package com.inn.startandconnect.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,10 +26,13 @@ public class ProductService {
 		
 	}
 
-
 	public Product getProductById(Long productId) {
 		Product p = productRepository.findById(productId).orElseThrow();
 		return p;
 
+	}
+
+	public List<Product> getAllProducts() {
+		return productRepository.findAll();
 	}
 }

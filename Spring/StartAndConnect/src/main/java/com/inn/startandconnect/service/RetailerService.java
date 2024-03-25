@@ -1,5 +1,7 @@
 package com.inn.startandconnect.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,5 +21,9 @@ public class RetailerService {
 	public Retailer getRetailerById(Long retailerId) {
 		Retailer r = retailerRepository.findById(retailerId).orElseThrow();
 		return r;
+	}
+
+	public List<Retailer> getAllRetailers() {
+		return retailerRepository.findAll();
 	}
 }

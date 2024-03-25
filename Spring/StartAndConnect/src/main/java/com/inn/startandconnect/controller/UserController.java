@@ -1,6 +1,9 @@
 package com.inn.startandconnect.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +28,11 @@ public class UserController {
     @PostMapping("/createUserWithSupplier")
     public User createUserWithSupplier(@RequestBody UserRequest userRequest) {
         return userService.createUserWithSupplier(userRequest);
+    }
+
+    @GetMapping("/allUsers")
+    public List<User> getAllUsers() {
+        return userService.getAllUsers();
     }
 
 }
