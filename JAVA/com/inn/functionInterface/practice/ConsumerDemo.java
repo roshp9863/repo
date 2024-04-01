@@ -2,6 +2,7 @@ package com.inn.functionInterface.practice;
 
 import java.util.function.Consumer;
 
+//https://www.youtube.com/watch?v=UfJ0lCH7FMM java guides Java 8 Tutorial | Java 8 Features in One Video | 4 Hours Full Course 🔥
 
 //class ConsumerImpl implements Consumer<String>{
 //
