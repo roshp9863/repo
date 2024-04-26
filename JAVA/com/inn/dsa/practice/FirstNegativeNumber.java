@@ -15,13 +15,17 @@ class FirstNegativeNumber {
         while (j < arr.length) {
             if (j - i + 1 < k) {
                 if (arr[j] < 0) {
-                    q.offer(arr[j]);
+                    q.offer(arr[j]); // 
                 }
                 j++;
+                System.out.println("Q--> "+ q);
             } else if (j - i + 1 == k) {
+            	
                 if (arr[j] < 0) {
                     q.offer(arr[j]);
                 }
+                System.out.println("Q in else if --> "+ q + " j ---> "+ j);
+
                 if (q.isEmpty()) {
                     System.out.print(0 + " ");
                 } else {
