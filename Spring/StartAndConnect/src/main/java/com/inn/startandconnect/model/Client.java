@@ -1,35 +1,43 @@
 package com.inn.startandconnect.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
-public class User {
+@Table(name = "User")
+public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
+    
+    @Column(unique = true)
     private String username;
+    
+    @Column(unique = true)
     private String email;
-    private String passwordHash;
+    
+    private String password;
     
     @ManyToOne
     @JoinColumn(name = "supplier_id")
     private Supplier supplier;
     
-    public User(Long userId, String username, String email, String passwordHash, Supplier supplier) {
+    public Client(Long userId, String username, String email, String password, Supplier supplier) {
 		super();
 		this.userId = userId;
 		this.username = username;
 		this.email = email;
-		this.passwordHash = passwordHash;
+		this.password = password;
 		this.supplier = supplier;
 	}
 
-	public User() {
+	public Client() {
     	super();
     }
 
@@ -57,12 +65,12 @@ public class User {
 		this.email = email;
 	}
 
-	public String getPasswordHash() {
-		return passwordHash;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setPasswordHash(String passwordHash) {
-		this.passwordHash = passwordHash;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public Supplier getSupplier() {
@@ -76,7 +84,7 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [userId=" + userId + ", username=" + username + ", email=" + email + ", passwordHash="
-				+ passwordHash + ", supplier=" + supplier + "]";
+				+ password + ", supplier=" + supplier + "]";
 	}
 	
 

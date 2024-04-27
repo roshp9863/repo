@@ -41,7 +41,17 @@ public class SixtySixDegree {
 		List<String> votelist = Arrays.asList("john", "johnny", "jackie", "johnny", "john", "jackie", "jamie", "jamie", "john", "johnny", "jamie", "johnny", "john");
 		Map<String, Long> map = votelist.stream().collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
 		
-		System.out.println(map);
+		
+		
+//		long maxValue = map.values().stream().mapToLong(Long::longValue).max().orElse(0);
+//
+//        map.entrySet().stream()
+//            .filter(entry -> entry.getValue() == maxValue)
+//            .map(Map.Entry::getKey)
+//            .forEach(System.out::println);
+//		System.out.println(map);
+		
+		
 		//{john: 4}
 		
 		Long max = 0l;

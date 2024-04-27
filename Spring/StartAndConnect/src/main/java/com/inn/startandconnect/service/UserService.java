@@ -1,85 +1,89 @@
 package com.inn.startandconnect.service;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.security.core.userdetails.User.UserBuilder;
-//import org.springframework.security.core.userdetails.UserDetails;
-//import org.springframework.security.core.userdetails.UserDetailsService;
-//import org.springframework.security.core.userdetails.UsernameNotFoundException;
-//import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.inn.startandconnect.model.User;
+import com.inn.startandconnect.dao.UserDao;
+import com.inn.startandconnect.model.Client;
 import com.inn.startandconnect.model.Supplier;
 import com.inn.startandconnect.model.UserRequest;
 import com.inn.startandconnect.repository.UserRepository;
 
 @Service
-public class UserService {//implements UserDetailsService{
+public class UserService  {//implements UserDetailsService{
 
     @Autowired
     private UserRepository userRepository;
 
     @Autowired
+    private UserDao userDao;
+
+    
+    @Autowired
     private SupplierService supplierService;
     
-//    @Autowired
-//    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    
 
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
     
-    public User createUser(User user) {
+    public Client createClient(Client user) {
         return userRepository.save(user);
     }
     
-    
+	public String createUserWithSupplier(UserRequest request) {
 
-	public User createUserWithSupplier(UserRequest request) {
+		Client user = request.getUser();
+		
+		Boolean isNotPresent = isUserAlreadyInDB(user);
+		
+		if(isNotPresent) {
+		
+			user.setPassword(passwordEncoder.encode(user.getPassword()));
+			Supplier supplier = request.getSupplier();
+			
+			Supplier savedSupplier = supplierService.createSupplier(supplier);
+			
+			user.setSupplier(savedSupplier);
+			createClient(user);
+			return "USER CREATED SUCCESSFULLY";
+		}else {
+			throw new RuntimeException("User is already Present");
+		}
 
-		User user = request.getUser();
-//		user.setPasswordHash(passwordEncoder.encode(user.getPasswordHash()));
-		Supplier supplier = request.getSupplier();
 		
-		Supplier savedSupplier = supplierService.createSupplier(supplier);
-		
-		user.setSupplier(savedSupplier);
-		return createUser(user);
 		
 	}
 
-	public List<User> getAllUsers() {
+	private Boolean isUserAlreadyInDB(Client user) {
+		Client c =null;
+		c = findByEmail(user.getEmail());
+		return c==null ? true : false;
+	}
+
+	public List<Client> getAllUsers() {
 		return userRepository.findAll();
 	}
 
-//	@Override
-//	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//		Optional<User> user = userRepository.findByUsername(username);
-//        UserBuilder builder = null;
-//        if (user.isPresent()) {
-//            User currentUser = user.get();
-//            builder = org.springframework.security.core.userdetails.
-//                      User.withUsername(username);
-//            builder.password(currentUser.getPasswordHash());
-////            builder.roles(currentUser.getRole());
-//        } else {
-//            throw new UsernameNotFoundException("User not found.");
-//        }
-//        return builder.build();	
-//    }
+	public Client findByUsername(String username) {
+		return userRepository.findByUsername(username);
+	}
+
+	public Client findByEmail(String email) {
+		return userRepository.findByEmail(email);
+	}
+
+	public Client findUserByEmailAndPassword(String email, String password) {
+		return userDao.findUserByEmailAndPassword(email, password);
+	}
+
 	
 	
-//	@Override
-//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//		User user = userRepository.findByUsername(username).get();
-//        if (user == null) {
-//            throw new UsernameNotFoundException("User not found with username: " + username);
-//        }
-//        return new org.springframework.security.core.userdetails.User(
-//            user.getUsername(), user.getPasswordHash(), Collections.emptyList());
-//    }
+	
 	
 }

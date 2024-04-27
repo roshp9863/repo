@@ -4,10 +4,14 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.inn.startandconnect.model.User;
+import com.inn.startandconnect.model.Client;
 
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<Client, Long> {
 	
-//	Optional<User> findByUsername(String username);
+	Client findByUsername(String username);
+
+	Client findByEmail(String email);
+
+	Client findUserByEmailAndPassword(String email, String password);
 
 }

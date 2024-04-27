@@ -2,14 +2,14 @@ package com.inn.startandconnect.model;
 
 public class UserRequest {
     private Supplier supplier;
-    private User user;
+    private Client user;
     
     public UserRequest() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-    public UserRequest(Supplier supplier, User user) {
+    public UserRequest(Supplier supplier, Client user) {
 		super();
 		this.supplier = supplier;
 		this.user = user;
@@ -23,11 +23,11 @@ public class UserRequest {
 		this.supplier = supplier;
 	}
 	
-    public User getUser() {
+    public Client getUser() {
 		return user;
 	}
 	
-    public void setUser(User user) {
+    public void setUser(Client user) {
 		this.user = user;
 	}
 
