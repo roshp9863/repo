@@ -20,6 +20,8 @@ public class RetailerController {
     @Autowired
     private RetailerService retailerService;
 
+    
+    //curl -X POST -H "Content-Type: application/json" -d '{"companyName":"Blinkit", "businessAddress":"Zomato ke pas", "contactNumber":"987654321"}' http://localhost:8080/retailers/createRetailer
     @PostMapping("/createRetailer")
     public Retailer createRetailer(@RequestBody Retailer retailer) {
         return retailerService.createRetailer(retailer);

@@ -113,11 +113,14 @@ public class SecurityConfiguration {
 	            authorizeRequests
 	                .requestMatchers("/users/createUserWithSupplier").permitAll()
 	                .requestMatchers("/startandconnect/login").permitAll()
-	                .requestMatchers("/startandconnect/welcome").permitAll()
+//	                .requestMatchers("/startandconnect/welcome").permitAll()
+//	                .requestMatchers("/products/**").permitAll()
+//	                .requestMatchers("/analytics/**").permitAll()
+//	                .requestMatchers("/retailers/**").permitAll()
 	                .anyRequest().authenticated()
 	        )
 	        .formLogin()
-	            .permitAll() // Allow access to the login page
+	            .permitAll().defaultSuccessUrl("/startandconnect/welcome") // Allow access to the login page
 	        .and()
 	        .httpBasic(); // Enable HTTP basic authentication
 	    http.csrf().disable(); // Disable CSRF protection

@@ -11,3 +11,4 @@ public interface AnalyticsRepository extends JpaRepository<Analytics, Long> {
 
 	List<Analytics> findByProduct_Supplier_SupplierId(Long supplierId);
 }
+	

@@ -21,6 +21,7 @@ public class ProductService {
 
 	public Product createProduct(Product product, Long id) {
 		Supplier supplier = supplierService.getSupplierById(id);
+		System.out.println("SUPPLIER : "+ supplier);
 		product.setSupplier(supplier);
 		return productRepository.save(product);
 		
