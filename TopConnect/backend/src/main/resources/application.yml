@@ -1,0 +1,85 @@
+spring:
+  application:
+    name: topconnect-backend
+  profiles:
+    active: local
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    open-in-view: false
+  cache:
+    type: caffeine
+    caffeine:
+      spec: maximumSize=1000,expireAfterWrite=300s
+    cache-names: artists,artistProfile,categories,offerings,featuredArtists
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+server:
+  port: 8080
+  shutdown: graceful
+  compression:
+    enabled: true
+    mime-types: application/json,text/html,text/css,application/javascript
+    min-response-size: 1024
+  tomcat:
+    threads:
+      max: 400
+      min-spare: 50
+    max-connections: 20000
+    accept-count: 500
+
+# ─── Actuator & Health ─────────────────────────────
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,caches,env
+      base-path: /actuator
+  endpoint:
+    health:
+      show-details: when_authorized
+      probes:
+        enabled: true
+  info:
+    env:
+      enabled: true
+  health:
+    redis:
+      enabled: false
+    mail:
+      enabled: false
+
+jwt:
+  secret: ${JWT_SECRET:dXlURVhUUEFTU1dPUkQhMTIzNDU2Nzg5MCFhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5emFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6YWJjZGVmZ2hpamtsbW5vcA==}
+  expiration: 3600000
+  refresh-expiration: 2592000000
+
+stripe:
+  api-key: ${STRIPE_API_KEY:sk_test_placeholder}
+
+twilio:
+  enabled: ${TWILIO_ENABLED:false}
+  account-sid: ${TWILIO_ACCOUNT_SID:}
+  auth-token: ${TWILIO_AUTH_TOKEN:}
+  whatsapp-from: ${TWILIO_WHATSAPP_FROM:whatsapp:+14155238886}
+
+app:
+  email:
+    dev-mode: false
+  payment:
+    dev-mode: ${PAYMENT_DEV_MODE:true}
+
+logging:
+  level:
+    root: WARN
+    org.connect: INFO
+    org.connect.controller: DEBUG
+    org.connect.service: DEBUG
+
+
+
+

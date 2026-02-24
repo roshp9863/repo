@@ -1,0 +1,81 @@
+spring:
+  application:
+    name: topconnect-backend
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+        use_sql_comments: true
+  datasource:
+    url: jdbc:postgresql://localhost:5432/topconnect
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 15
+      minimum-idle: 5
+      connection-timeout: 20000
+      idle-timeout: 300000
+      max-lifetime: 1200000
+  redis:
+    host: localhost
+    port: 6379
+    timeout: 60000ms
+  mail:
+    host: localhost
+    port: 1025
+    username: test
+    password: test
+    properties:
+      mail:
+        smtp:
+          auth: false
+          starttls:
+            enable: false
+          connectiontimeout: 3000
+          timeout: 3000
+          writetimeout: 3000
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    clean-on-validation-error: false
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+server:
+  port: 8080
+
+jwt:
+  secret: dXlURVhUUEFTU1dPUkQhMTIzNDU2Nzg5MCFhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5emFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6YWJjZGVmZ2hpamtsbW5vcA==
+  expiration: 3600000 # 1 hour in milliseconds
+  refresh-expiration: 2592000000 # 30 days in milliseconds
+
+stripe:
+  api-key: sk_test_your_stripe_key_here
+  webhook-secret: whsec_test_your_webhook_secret_here
+
+app:
+  cors:
+    allowed-origins: http://localhost:3000,http://localhost:5173
+  email:
+    from: noreply@topconnect.local
+    name: TopConnect
+    dev-mode: true
+  frontend-url: http://localhost:5173
+  payment:
+    dev-mode: true
+  rate-limit:
+    auth: 60
+    global: 600
+    skip-localhost: true   # bypass rate limiter for localhost (load testing)
+
+logging:
+  level:
+    root: INFO
+    org.connect: DEBUG
+

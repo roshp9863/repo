@@ -1,0 +1,97 @@
+# ─── Production Profile ─────────────────────────────
+# All secrets come from environment variables.
+# Never commit real credentials here.
+
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: false
+        use_sql_comments: false
+  datasource:
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 50
+      minimum-idle: 20
+      connection-timeout: 15000
+      idle-timeout: 300000
+      max-lifetime: 900000
+  redis:
+    host: ${REDIS_HOST:localhost}
+    port: ${REDIS_PORT:6379}
+    password: ${REDIS_PASSWORD:}
+  mail:
+    host: ${MAIL_HOST}
+    port: ${MAIL_PORT:587}
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+  flyway:
+    enabled: true
+    baseline-on-migrate: false
+
+server:
+  port: ${PORT:8080}
+  compression:
+    enabled: true
+
+jwt:
+  secret: ${JWT_SECRET}
+  expiration: 3600000
+  refresh-expiration: 2592000000
+
+stripe:
+  api-key: ${STRIPE_API_KEY}
+  webhook-secret: ${STRIPE_WEBHOOK_SECRET}
+
+twilio:
+  enabled: ${TWILIO_ENABLED:false}
+  account-sid: ${TWILIO_ACCOUNT_SID}
+  auth-token: ${TWILIO_AUTH_TOKEN}
+  whatsapp-from: ${TWILIO_WHATSAPP_FROM}
+
+app:
+  cors:
+    allowed-origins: ${CORS_ORIGINS:https://topconnect.com}
+  email:
+    from: ${MAIL_FROM:noreply@topconnect.com}
+    name: TopConnect
+    dev-mode: false
+  frontend-url: ${FRONTEND_URL:https://topconnect.com}
+  payment:
+    dev-mode: false
+  rate-limit:
+    auth: 30
+    global: 300
+    skip-localhost: false   # enforce rate limiting in production
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: never
+      probes:
+        enabled: true
+
+logging:
+  level:
+    root: WARN
+    org.connect: INFO
+    org.connect.controller: INFO
+    org.connect.service: INFO
+
